@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-data=pd.read_csv("./original_data.csv")
+data=pd.read_csv("./iris.csv")
 os.getcwd()
 #划分数据集
 data=data.sample(frac=1)#打乱顺序
