@@ -12,8 +12,51 @@ linear层的参数使用标准正态分布初始化
 
 反向传播时，利用后一层的前向计算时输入变量的梯度作为本层反向传播函数的输入，得到本层相关变量的梯度并继续向前传递。
 linear层需要对本层输入及本层的权重参数分别求导。
+每层反向传播时返回的梯度是一个和要求梯度的变量形状相同的矩阵.
+**Relu层**
+```
+def backward(self,dout):
+        dout[self.mask]=0
+        return dout 
+```
 
+**sigmoid层**
+```
+def backward(self,dout):
+        return dout*self.y*(1-self.y)
+```
+**linear层**
+```
+def backward(self,dout):
+            tmp1=np.zeros_like(self.wb,np.float64)
+            tmp2=np.zeros((self.batch_size,self.in_dim),np.float64)
+            for i in range(self.in_dim+1):
+                for j in range(self.out_dim):
+                    tmp1[i][j]+=np.dot(dout[:,j],self.x[:,i])
+            for i in range(self.batch_size):
+                for j in range(self.in_dim):
+                    tmp2[i][j]+=np.dot(dout[i,:],self.wb[j,:])
+            return (tmp1,tmp2)
+```
 
+**softmax层**
+```
+def backward(self,dout):
+        tmp=np.zeros((self.batch_size,self.feature_dim),np.float64)
+        for i in range(self.batch_size):
+            for j in range(self.feature_dim):
+                tmp[i][j]=self.y[i][j]*(dout[i][j]-np.dot(dout[i,:],self.y[i,:]))
+        return tmp
+```
+**crossEntropy层**
+```
+def backward(self):
+            tmp=np.zeros_like(self.estimation,np.float64) 
+            for i in range(self.batch_size):
+                for j in range(self.feature_dim):
+                    tmp[i][j]=-self.target[i][j]/self.estimation[i][j]
+            return tmp
+ ```
 
 
 **Iris_train.py** 中用上面的功能，搭建了一个使用sigmoid做激活函数，具有三个线性层和一个softmax层，损失函数选用交叉熵的多分类神经网络。
