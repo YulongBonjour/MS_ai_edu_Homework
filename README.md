@@ -1,4 +1,10 @@
 # MS_ai_edu_Homework
+**任务说明**
+*非线性多分类器
+鸢尾花数据集iris.csv含有150条记录，每条记录包含萼片长度sepal length、萼片宽度sepal width、 花瓣长度petal length和花瓣宽度petal width四个数值型特征，以及它的所属类别class（可能为Iris-setosa,Iris-versicolor,Iris-virginica三者之一）。
+
+任务：请利用该数据集训练出一个良好的非线性分类器。*
+
 提交内容：
 MyModel.py中借助numpy库，实现了Relu，sigmoid，linear，softmax，crossEntropy的前向传播和反向传播。
 linear层的参数使用标准正态分布初始化
