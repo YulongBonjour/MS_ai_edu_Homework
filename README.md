@@ -13,6 +13,7 @@ linear层的参数使用标准正态分布初始化
 反向传播时，利用后一层的前向计算时输入变量的梯度作为本层反向传播函数的输入，得到本层相关变量的梯度并继续向前传递。
 linear层需要对本层输入及本层的权重参数分别求导。
 每层反向传播时返回的梯度是一个和要求梯度的变量形状相同的矩阵.
+
 **Relu层**
 ```
 def backward(self,dout):
@@ -28,8 +29,8 @@ def backward(self,dout):
 **linear层**
 ```
 def backward(self,dout):
-            tmp1=np.zeros_like(self.wb,np.float64)
-            tmp2=np.zeros((self.batch_size,self.in_dim),np.float64)
+            tmp1=np.zeros_like(self.wb,np.float64)#对权重的梯度
+            tmp2=np.zeros((self.batch_size,self.in_dim),np.float64)#对上层输入的梯度
             for i in range(self.in_dim+1):
                 for j in range(self.out_dim):
                     tmp1[i][j]+=np.dot(dout[:,j],self.x[:,i])
