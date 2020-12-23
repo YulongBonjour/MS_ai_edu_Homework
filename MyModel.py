@@ -36,8 +36,8 @@ class linear():
             self.y=np.matmul(new_x,self.wb)
             return self.y
     def backward(self,dout):
-            tmp1=np.zeros_like(self.wb,np.float64)
-            tmp2=np.zeros((self.batch_size,self.in_dim),np.float64)
+            tmp1=np.zeros_like(self.wb,np.float64)#对权重的梯度
+            tmp2=np.zeros((self.batch_size,self.in_dim),np.float64)#对上层输入的梯度
             for i in range(self.in_dim+1):
                 for j in range(self.out_dim):
                     tmp1[i][j]+=np.dot(dout[:,j],self.x[:,i])
